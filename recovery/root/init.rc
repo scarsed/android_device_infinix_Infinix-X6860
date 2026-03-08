@@ -1,0 +1,48 @@
+# =========================================================
+# FBE DECRYPTION SERVICES AND HOSTS
+# =========================================================
+
+# A. Core Service Manager (Fixes the Binder Context error)
+service servicemanager /system/bin/servicemanager
+    class core
+    user system
+    group system
+    seclabel u:r:servicemanager:s0
+
+# B. Hardware Service Manager (Fixes the 'No such file' error)
+# Note: We use 'oneshot' to ensure it starts, and we omit 'disabled'.
+service hwservicemanager /system/system_ext/bin/hwservicemanager
+    class core
+    user system
+    group system readproc
+    seclabel u:r:hwservicemanager:s0
+    # The 'oneshot' property is used when a service does its job and shouldn't be restarted.
+    # It ensures the service executes immediately.
+    oneshot 
+    
+# C. SharedSecret HAL Host (Needed by KeyMint)
+service sharedsecret /system/bin/vndservicemanager --path=/system/lib64/hw
+    class hal
+    user system
+    group system
+    seclabel u:r:sharedsecret:s0
+    interface android.hardware.security.sharedsecret.ISharedSecret/default
+
+# D. KeyMint HAL
+service keymint /vendor/bin/hw/android.hardware.security.keymint-service.trustonic
+    class hal
+    user system
+    group system
+    seclabel u:r:keymint:s0
+    interface android.hardware.security.keymint.IKeyMintDevice/default
+    on restart:sharedsecret
+
+# E. Keystore 2.0 
+service keystore2 /system/bin/keystore2
+    class core
+    user system
+    group system
+    capabilities SETUID SETGID
+    seclabel u:r:keystore:s0
+    interface android.system.keystore2.IKeystoreService/default
+    on restart:keymint
