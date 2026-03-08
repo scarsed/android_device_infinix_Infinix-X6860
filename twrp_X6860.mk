@@ -12,7 +12,7 @@ $(call inherit-product, device/infinix/X6860/device.mk)
 $(call inherit-product, vendor/twrp/config/common.mk)
 
 # Product Specifics
-PRODUCT_NAME := twrp_x6860
+PRODUCT_NAME := twrp_X6860
 PRODUCT_DEVICE := X6860
 PRODUCT_BRAND := Infinix
 PRODUCT_MODEL := Infinix X6860
