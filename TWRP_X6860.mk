@@ -5,7 +5,7 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-# Inherit from TECNO-CLA6 device
+# Inherit from INFINIX-X6860 device
 $(call inherit-product, device/infinix/X6860/device.mk)
 
 # Inherit some common TWRP stuff.
