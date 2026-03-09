@@ -1,4 +1,4 @@
-DEVICE_PATH := device/infinix/Infinix-X6860
+DEVICE_PATH := device/infinix/X6860
 
 # Fix conflict: exclude duplicate MTK Boot Control HAL from common vendor tree
 TARGET_BOARD_HALS += -android.hardware.boot@1.2-mtkimpl
